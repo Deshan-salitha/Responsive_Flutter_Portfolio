@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/constants.dart';
+import 'package:flutter_profile/screens/main/components/Knowledges.dart';
 import 'package:flutter_profile/screens/main/components/animated_circular_progress_indicator.dart';
 import 'package:flutter_profile/screens/main/components/area_info_text.dart';
+import 'package:flutter_profile/screens/main/components/coding.dart';
 import 'package:flutter_profile/screens/main/components/my_info.dart';
 import 'package:flutter_profile/screens/main/components/skills.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({
@@ -36,92 +39,51 @@ class Sidebar extends StatelessWidget {
               SizedBox(
                 height: defaultPadding,
               ),
-              Coding()
+              Coding(),
+              Knowledges(),
+              Divider(),
+              SizedBox(
+                height: defaultPadding / 2,
+              ),
+              TextButton(
+                  onPressed: () {},
+                  child: FittedBox(
+                    child: Row(
+                      children: [
+                        Text(
+                          "DOWNLOAD CV",
+                          style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.bodyText1!.color),
+                        ),
+                        SizedBox(
+                          width: defaultPadding / 2,
+                        ),
+                        SvgPicture.asset("assets/icons/download.svg")
+                      ],
+                    ),
+                  )),
+              Container(
+                margin: EdgeInsets.only(top: defaultPadding),
+                color: Color(0xFF24242e),
+                child: Row(children: [
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset("assets/icons/linkedin.svg")),
+                  IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset("assets/icons/github.svg")),
+                  IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset("assets/icons/twitter.svg")),
+                  Spacer()
+                ]),
+              )
             ]),
           ))
         ],
       ),
-    );
-  }
-}
-
-class Coding extends StatelessWidget {
-  const Coding({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Divider(),
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-        child: Text(
-          "Coding",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
-      Column(children: [
-        AnimatedLinearProgressIndicator(
-          lable: "Dart",
-          percentage: 0.8,
-        ),
-        AnimatedLinearProgressIndicator(
-          lable: "Python",
-          percentage: 0.68,
-        ),
-        AnimatedLinearProgressIndicator(
-          lable: "HTML",
-          percentage: 0.9,
-        ),
-        AnimatedLinearProgressIndicator(
-          lable: "CSS",
-          percentage: 0.75,
-        ),
-        AnimatedLinearProgressIndicator(
-          lable: "JavaScript",
-          percentage: 0.58,
-        )
-      ])
-    ]);
-  }
-}
-
-class AnimatedLinearProgressIndicator extends StatelessWidget {
-  const AnimatedLinearProgressIndicator(
-      {Key? key, required this.percentage, required this.lable})
-      : super(key: key);
-  final double percentage;
-  final String lable;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: defaultPadding),
-      child: TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: percentage),
-          duration: defaultDuration,
-          builder: (context, double value, child) => Column(
-                children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          lable,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Text((value * 100).toInt().toString() + "%"),
-                      ]),
-                  SizedBox(
-                    height: defaultPadding / 2,
-                  ),
-                  LinearProgressIndicator(
-                    value: value,
-                    color: primaryColor,
-                    backgroundColor: darkColor,
-                  ),
-                ],
-              )),
     );
   }
 }
