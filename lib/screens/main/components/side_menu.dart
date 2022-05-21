@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/constants.dart';
+import 'package:flutter_profile/screens/main/components/animated_circular_progress_indicator.dart';
+import 'package:flutter_profile/screens/main/components/area_info_text.dart';
 import 'package:flutter_profile/screens/main/components/my_info.dart';
+import 'package:flutter_profile/screens/main/components/skills.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({
@@ -29,15 +32,11 @@ class Sidebar extends StatelessWidget {
                 titile: "Age",
                 text: "22",
               ),
-              Divider(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-                child: Text(
-                  "Skills",
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
+              Skills(),
+              SizedBox(
+                height: defaultPadding,
               ),
-              AnimatedCircularProgressIndicator()
+              Coding()
             ]),
           ))
         ],
@@ -46,69 +45,83 @@ class Sidebar extends StatelessWidget {
   }
 }
 
-class AnimatedCircularProgressIndicator extends StatelessWidget {
-  const AnimatedCircularProgressIndicator({
+class Coding extends StatelessWidget {
+  const Coding({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AspectRatio(
-          aspectRatio: 1,
-          child: TweenAnimationBuilder(
-              tween: Tween<double>(begin: 0, end: 1),
-              duration: defaultDuration,
-              builder: (context, double value, child) => Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CircularProgressIndicator(
-                        value: value,
-                        color: primaryColor,
-                        backgroundColor: darkColor,
-                      ),
-                      Center(
-                        child: Text(
-                          (value * 100).toInt().toString() + "%",
-                          style:
-                              Theme.of(context).textTheme.subtitle1,
-                        ),
-                      )
-                    ],
-                  )),
-        ),
-        SizedBox(
-          height: defaultPadding / 2,
-        ),
-        Text(
-          "Flutter",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return Column(children: [
+      Divider(),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+        child: Text(
+          "Coding",
           style: Theme.of(context).textTheme.subtitle2,
+        ),
+      ),
+      Column(children: [
+        AnimatedLinearProgressIndicator(
+          lable: "Dart",
+          percentage: 0.8,
+        ),
+        AnimatedLinearProgressIndicator(
+          lable: "Python",
+          percentage: 0.68,
+        ),
+        AnimatedLinearProgressIndicator(
+          lable: "HTML",
+          percentage: 0.9,
+        ),
+        AnimatedLinearProgressIndicator(
+          lable: "CSS",
+          percentage: 0.75,
+        ),
+        AnimatedLinearProgressIndicator(
+          lable: "JavaScript",
+          percentage: 0.58,
         )
-      ],
-    );
+      ])
+    ]);
   }
 }
 
-class AreaInfoText extends StatelessWidget {
-  const AreaInfoText({Key? key, this.titile, this.text}) : super(key: key);
-
-  final String? titile;
-  final String? text;
+class AnimatedLinearProgressIndicator extends StatelessWidget {
+  const AnimatedLinearProgressIndicator(
+      {Key? key, required this.percentage, required this.lable})
+      : super(key: key);
+  final double percentage;
+  final String lable;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: defaultPadding / 2),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(
-          titile!,
-          style: TextStyle(color: Colors.white),
-        ),
-        Text(text!),
-      ]),
+      padding: const EdgeInsets.only(bottom: defaultPadding),
+      child: TweenAnimationBuilder(
+          tween: Tween<double>(begin: 0, end: percentage),
+          duration: defaultDuration,
+          builder: (context, double value, child) => Column(
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          lable,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Text((value * 100).toInt().toString() + "%"),
+                      ]),
+                  SizedBox(
+                    height: defaultPadding / 2,
+                  ),
+                  LinearProgressIndicator(
+                    value: value,
+                    color: primaryColor,
+                    backgroundColor: darkColor,
+                  ),
+                ],
+              )),
     );
   }
 }
