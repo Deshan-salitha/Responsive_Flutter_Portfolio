@@ -18,8 +18,7 @@ class MyInfo extends StatelessWidget {
             Spacer(),
             CircleAvatar(
               radius: 50,
-              backgroundImage:
-                  AssetImage("assets/images/Octocat.jpg"),
+              backgroundImage: AssetImage("images/DSC_0914.JPG"),
             ),
             Spacer(),
             Text(
@@ -29,8 +28,7 @@ class MyInfo extends StatelessWidget {
             Text(
               "Backend Developer & \n Tech Enthusiast",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w200, height: 1.5),
+              style: TextStyle(fontWeight: FontWeight.w200, height: 1.5),
             ),
             Spacer(
               flex: 2,
